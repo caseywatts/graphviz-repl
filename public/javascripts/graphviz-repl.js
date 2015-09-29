@@ -39,42 +39,46 @@ function compile(dotData, cb){
     url: '/compile.b64',
     data: {dot: dotData
           ,type: getType()},
-    success: function(data, textStatus, jqXHR){
-      compiling = false
-      $('#graph').attr('src',data)
-      error()
-      if(cb){
-        cb()
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown){
-      compiling = false
-      if(jqXHR.status == 400){
-        error(jqXHR.responseText)
-        $('#graph').attr('src','/no_such_path')
-      }
-      if(cb){
-        cb()
-      }
-    }
+        success: function(data, textStatus, jqXHR){
+          compiling = false
+          $('#graph').attr('src',data)
+          error()
+          if(cb){
+            cb()
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          compiling = false
+          if(jqXHR.status == 400){
+            error(jqXHR.responseText)
+            $('#graph').attr('src','/no_such_path')
+          }
+          if(cb){
+            cb()
+          }
+        }
   })
 }
 
 var _dotData = ''
 function autoCompileDo(){
-  if(_dotData != $('#dot').val()){
-    needCompile = true;
-    _dotData = $('#dot').val()
-    cacheDotData(_dotData)
-  }
+  $.get('http://piratepad.be/p/yourpadname/export/txt', function( data ) {
+    var _newDotData = data;
+    if(_dotData != _newDotData){
+      needCompile = true;
+      _dotData = _newDotData;
+      cacheDotData(_dotData);
+    }
 
-  if(!needCompile){
-    return
-  }
-  compile(dotData(),
-          function(){
-            needCompile = false;
-          })
+    if(!needCompile){
+      return
+    }
+    debugger;
+    compile(_dotData,
+            function(){
+              needCompile = false;
+            })
+  })
 }
 
 function loadDotData() {
