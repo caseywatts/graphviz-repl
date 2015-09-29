@@ -67,8 +67,8 @@ function compile(dotData, cb){
 
 var _cachedDotData = '';
 function autoCompileDo(){
-  var thisPadName = 'yourpadname';
-  $.get(txtExportPath('yourpadname'), function( data ) {
+  var thisPadName = $('iframe').data('etherpad-id');
+  $.get(txtExportPath(thisPadName), function( data ) {
     var _cachedDotData = loadDotData();
     var _newDotData = data;
     if(_cachedDotData != _newDotData){

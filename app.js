@@ -60,9 +60,10 @@ function findDotPath(){
   process.exit(-1)
 }
 
-routes.setDotPath(findDotPath())
-app.get('/', routes.index)
-app.post('/compile.b64', routes.compile_to_base64)
+routes.setDotPath(findDotPath());
+app.get('/', routes.index);
+app.post('/compile.b64', routes.compile_to_base64);
+app.get('/etherpad/:id', routes.etherpadPage);
 
 http.createServer(app).listen(
   app.get('port'),

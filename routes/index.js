@@ -13,6 +13,10 @@ exports.index = function(req, res){
   res.render('index', { title: 'Graphviz REPL' })
 }
 
+exports.etherpadPage = function(req, res){
+  res.render('etherpad', { title: 'Graphviz REPL', etherpadId: req.params.id })
+}
+
 exports.compile_to_base64 = function(req, res){
   if(!req.body.dot){
     res.status(400)
