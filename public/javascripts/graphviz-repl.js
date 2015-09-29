@@ -67,13 +67,13 @@ function compile(dotData, cb){
 
 var _cachedDotData = '';
 function autoCompileDo(){
-  var thisPadName = $('iframe').data('etherpad-id');
-  $.get(txtExportPath(thisPadName), function( data ) {
-    var _cachedDotData = loadDotData();
+  var etherpadId = $('iframe').data('etherpad-id');
+  $.get(txtExportPath(etherpadId), function( data ) {
+    var _cachedDotData = loadCachedDotData();
     var _newDotData = data;
     if(_cachedDotData != _newDotData){
       needCompile = true;
-      cacheDotData(_newDotData);
+      cacheDotData(etherpadId, _newDotData);
     }
 
     if(!needCompile){
@@ -86,16 +86,16 @@ function autoCompileDo(){
   });
 }
 
-function loadDotData() {
-  var _data = localStorage.getItem('dotData');
-  if (_data != null && _data.trim() != "")
-    return _data
+function loadCachedDotData(etherpadId) {
+  var _cachedData = localStorage.getItem(etherpadId);
+  if (_cachedData !== null && _cachedData.trim() !== "")
+    return _data;
   else
-    return defaultData()
+    return defaultData();
 }
 
-function cacheDotData(data) {
-  localStorage.setItem('dotData', data)
+function cacheDotData(etherpadId, data) {
+  localStorage.setItem(etherpadId, data);
 }
 
 function defaultData() {
