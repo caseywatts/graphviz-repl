@@ -1,8 +1,13 @@
-var compiling = false
-var needCompile = true
-var type = 'dot'
-function dotData(){
-  return $('#dot').val()
+var compiling = false;
+var needCompile = true;
+var type = 'dot';
+var settings = {
+  exportSuffix: '/export/txt',
+  hostRoot: 'http://piratepad.be/p/'
+};
+
+function txtExportPath(padName) {
+  return settings.hostRoot + padName + settings.exportSuffix;
 }
 
 function error(text){
@@ -60,25 +65,25 @@ function compile(dotData, cb){
   })
 }
 
-var _dotData = ''
+var _cachedDotData = '';
 function autoCompileDo(){
-  $.get('http://piratepad.be/p/yourpadname/export/txt', function( data ) {
+  var thisPadName = 'yourpadname';
+  $.get(txtExportPath('yourpadname'), function( data ) {
+    var _cachedDotData = loadDotData();
     var _newDotData = data;
-    if(_dotData != _newDotData){
+    if(_cachedDotData != _newDotData){
       needCompile = true;
-      _dotData = _newDotData;
-      cacheDotData(_dotData);
+      cacheDotData(_newDotData);
     }
 
     if(!needCompile){
-      return
+      return;
     }
-    debugger;
-    compile(_dotData,
+    compile(_newDotData,
             function(){
               needCompile = false;
-            })
-  })
+            });
+  });
 }
 
 function loadDotData() {
@@ -105,8 +110,7 @@ function defaultData() {
 }
 
 $(document).ready(function(){
-  $('#dot').focus()
-  $('#dot').val(loadDotData())
-  setInterval(autoCompileDo, 500)
+  autoCompileDo();
+  setInterval(autoCompileDo, 500);
 })
 
