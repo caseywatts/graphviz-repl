@@ -13,56 +13,56 @@ function txtExportPath(padName) {
 function error(text){
   var errArea = $('#msg');
   if(text){
-    errArea.text(text)
-    errArea.fadeIn()
+    errArea.text(text);
+    errArea.fadeIn();
   }else{
-    errArea.fadeOut()
+    errArea.fadeOut();
   }
 }
 
 function setType(selected){
-  type = $(selected).attr('type')
-  var items = $(selected).parent().parent().children()
+  type = $(selected).attr('type');
+  var items = $(selected).parent().parent().children();
   items.each(function(e){
-    $($($(items[e]).children()[0]).children()[0]).text('　')
+    $($($(items[e]).children()[0]).children()[0]).text('　');
   });
-  $($(selected).children()[0]).text('✓')
-  needCompile = true
+  $($(selected).children()[0]).text('✓');
+  needCompile = true;
 }
 
 function getType(){
-  return type
+  return type;
 }
 
 function compile(dotData, cb){
   if(compiling){
     return;
   }
-  compiling = true
+  compiling = true;
   $.ajax({
     type: 'POST',
     url: '/compile.b64',
-    data: {dot: dotData
-          ,type: getType()},
+    data: {dot: dotData,
+           type: getType()},
         success: function(data, textStatus, jqXHR){
-          compiling = false
-          $('#graph').attr('src',data)
-          error()
+          compiling = false;
+          $('#graph').attr('src',data);
+          error();
           if(cb){
-            cb()
+            cb();
           }
         },
         error: function(jqXHR, textStatus, errorThrown){
-          compiling = false
+          compiling = false;
           if(jqXHR.status == 400){
-            error(jqXHR.responseText)
+            error(jqXHR.responseText);
             $('#graph').attr('src','/no_such_path')
           }
           if(cb){
-            cb()
+            cb();
           }
         }
-  })
+  });
 }
 
 var _cachedDotData = '';
@@ -118,5 +118,4 @@ function defaultData() {
 $(document).ready(function(){
   autoCompileDo();
   setInterval(autoCompileDo, 500);
-})
-
+});
