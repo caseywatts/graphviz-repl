@@ -69,9 +69,15 @@ var _cachedDotData = '';
 function autoCompileDo(){
   var etherpadId = $('iframe').data('etherpad-id');
   $.get(txtExportPath(etherpadId), function( data ) {
-    var _cachedDotData = loadCachedDotData();
     var _newDotData = data;
-    if(_cachedDotData != _newDotData){
+    var _cachedDotData = loadCachedDotData(etherpadId);
+    if(_cachedDotData === null){
+      // if cache is empty, use server data
+      needCompile = true;
+      cacheDotData(etherpadId, _newDotData);
+    }
+    else if(_cachedDotData !== _newDotData){
+      // if this server data hasn't been rendered yet
       needCompile = true;
       cacheDotData(etherpadId, _newDotData);
     }
@@ -89,9 +95,9 @@ function autoCompileDo(){
 function loadCachedDotData(etherpadId) {
   var _cachedData = localStorage.getItem(etherpadId);
   if (_cachedData !== null && _cachedData.trim() !== "")
-    return _data;
+    return _cachedData;
   else
-    return defaultData();
+    return null;
 }
 
 function cacheDotData(etherpadId, data) {
