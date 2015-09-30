@@ -3,7 +3,8 @@ extends layout
 block content
   div(id="everything", class="row")
     div(id="editor", class="span6")
-      iframe(src="http://piratepad.be/p/" + etherpadId + "?showChat=false" height="500px" width="400px" data-etherpad-id=etherpadId)
+      p #{etherpadId}
+      iframe(src="http://piratepad.be/p/" + etherpadId + "?showChat=false" height="500px" width="460px" data-etherpad-id=etherpadId)
     div(id="render", class="span6")
       img(id='graph' style='max-height:80vh')
   div(class="row")
