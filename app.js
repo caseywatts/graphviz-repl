@@ -67,7 +67,6 @@ app.get('/etherpad/:id', routes.etherpadPage);
 
 http.createServer(app).listen(
   app.get('port'),
-  argv.addr,
   function(){
     console.log(['server listening on', app.get('addr'), app.get('port')].join(' '));
   });
