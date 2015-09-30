@@ -28,7 +28,7 @@ if(argv.h || argv.help){
 var app = express();
 
 app.configure(function(){
-  app.set('port', parseInt(process.env.PORT || argv.port))
+  app.set('port', parseInt(argv.port))
   app.set('addr', argv.addr || 'localhost')
   app.set('views', __dirname + '/views')
   app.set('view engine', 'jade')
