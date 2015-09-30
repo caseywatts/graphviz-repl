@@ -22,3 +22,9 @@ textarea{
 #msg{
   display: none;
 }
+
+img#graph {
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 4px 4px 5px #888888;
+}
