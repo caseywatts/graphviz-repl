@@ -3,7 +3,7 @@ var needCompile = true;
 var type = 'dot';
 var settings = {
   exportSuffix: '/export/txt',
-  hostRoot: 'http://piratepad.be/p/'
+  hostRoot: 'https://etherpad.net/p/'
 };
 
 function txtExportPath(padName) {
