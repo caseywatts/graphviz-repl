@@ -3,7 +3,7 @@ extends layout
 block content
   div(id="everything", class="row")
     div(id="editor", class="span6")
-      iframe(src="https://pad.systemli.org/p/" + etherpadId + "?showChat=false" height="500px" width="460px" data-etherpad-id=etherpadId)
+      iframe(src="https://graphvizrepl-etherpad.herokuapp.com/p/" + etherpadId + "?showChat=false" height="500px" width="460px" data-etherpad-id=etherpadId)
     div(id="render", class="span6")
       h4 #{etherpadId}
       img(id='graph' class="graph-image")
