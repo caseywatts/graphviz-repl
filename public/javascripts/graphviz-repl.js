@@ -7,7 +7,7 @@ var settings = {
 };
 
 function goToRandom() {
-  window.location = "etherpad/" + randomPadName();
+  window.location = "/etherpad/" + randomPadName();
 }
 
 function randomPadName()
