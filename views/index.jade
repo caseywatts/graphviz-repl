@@ -2,8 +2,16 @@ extends layout
 
 block content
   div(id="everything", class="row")
-    div(id="editor", class="span6")
-      textarea(class="span6", id='dot', rows='20')
-    div(id="render", class="span6")
-      img(id='graph' class="graph-image")
-      pre(id="msg", class="alert alert-block")
+    div(class="span6")
+      h1= "Graphviz Repl"
+      p= "Every change you make to the etherpad document (left pane) auto-generates a grophviz diagram (right pane)."
+      p= "Each 'room' on graphviz-repl matches an etherpad document with the same name."
+      p= "Graphviz has 5 different styles of layout. The most popular/common is 'dot' and that's the default. To try the others, toggle the 'Layout' above."
+      h3= "Its Parts"
+      p= "Graphviz is a graph vizualization markup language - sort of like markdown for diagrams"
+      p= "Etherpad is a realtime collaborative text editor, like Google Docs. Anyone viewing the same Etherpad as you will see theirs updated in realtime for every change you make."
+      p= "REPL stands for 'Read Evaluate Print Loop' - it's a computery jargony term that sorta means the code runs as you write it (as opposed to being 'compiled' - although graphviz is technically compiled)."
+    div(class="span6")
+      h2= "Get A Room"
+      p= "You can use a randomly-generated room, or you can name a room whatever you'd like by modifying the URL."
+      a(class='btn btn-default' onclick='goToRandom()') Random Page

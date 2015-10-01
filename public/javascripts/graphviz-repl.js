@@ -6,6 +6,24 @@ var settings = {
   hostRoot: 'https://pad.systemli.org/p/'
 };
 
+function goToRandom() {
+  window.location = "etherpad/" + randomPadName();
+}
+
+function randomPadName()
+{
+  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var string_length = 10;
+  var randomstring = '';
+  for (var i = 0; i < string_length; i++)
+  {
+    var rnum = Math.floor(Math.random() * chars.length);
+    randomstring += chars.substring(rnum, rnum + 1);
+  }
+  return randomstring;
+}
+
+
 function txtExportPath(padName) {
   return settings.hostRoot + padName + settings.exportSuffix;
 }
