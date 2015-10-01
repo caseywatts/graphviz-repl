@@ -1,24 +1,26 @@
 extends layout
 
 block content
-  div(id="everything", class="row")
-    div(class="span6")
-
+  div(class="jumbotron")
+    div(class="container")
       h1= "Graphviz Repl"
       p= "Every change you make to the etherpad document (left pane) auto-generates a grophviz diagram (right pane)."
       p= "Each 'room' on graphviz-repl matches an etherpad document with the same name."
       p= "Graphviz has 5 different styles of layout. The most popular/common is 'dot' and that's the default. To try the others, toggle the 'Layout' above."
 
-      h3= "Its Parts"
-      p= "Graphviz is a graph vizualization markup language - sort of like markdown for diagrams"
-      p= "Etherpad is a realtime collaborative text editor, like Google Docs. Anyone viewing the same Etherpad as you will see theirs updated in realtime for every change you make."
-      p= "REPL stands for 'Read Evaluate Print Loop' - it's a computery jargony term that sorta means the code runs as you write it (as opposed to being 'compiled' - although graphviz is technically compiled)."
-    div(class="span6")
+  div(class="container")
+    div(id="everything", class="row")
+      div(class="col-md-6")
+        h3= "Its Parts"
+        p= "Graphviz is a graph vizualization markup language - sort of like markdown for diagrams"
+        p= "Etherpad is a realtime collaborative text editor, like Google Docs. Anyone viewing the same Etherpad as you will see theirs updated in realtime for every change you make."
+        p= "REPL stands for 'Read Evaluate Print Loop' - it's a computery jargony term that sorta means the code runs as you write it (as opposed to being 'compiled' - although graphviz is technically compiled)."
+      div(class="col-md-6")
 
-      h2= "Random Room"
-      p= "We'll generate a room for you with some random letters and numbers. This is semi-private in that other people will have trouble guessing your room name (although still public and discoverable if someone is lucky enough to guess it)."
-      p
-        a(class='btn btn-default' onclick='goToRandom()') Generate A Randomly Named REPL
-      h2= "Named Room"
-      p You can generate a room with whatever name you'd like by just going to that page. To go to a room "my-silly-name" I would type in the URL bar
-      code graphvizrepl.com/my-silly-name
+        h2= "Random Room"
+        p= "We'll generate a room for you with some random letters and numbers. This is semi-private in that other people will have trouble guessing your room name (although still public and discoverable if someone is lucky enough to guess it)."
+        p
+          a(class='btn btn-default' onclick='goToRandom()') Generate A Randomly Named REPL
+        h2= "Named Room"
+        p You can generate a room with whatever name you'd like by just going to that page. To go to a room "my-silly-name" I would type in the URL bar
+        code graphvizrepl.com/my-silly-name
