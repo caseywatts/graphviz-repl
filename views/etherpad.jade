@@ -2,10 +2,10 @@ extends layout
 
 block content
   div(class="container")
-    div(id="everything", class="row")
-      div(id="editor", class="col-md-6")
+    div(id="everything")
+      div(id="editor" class="left-pane")
         iframe(src="https://graphvizrepl-etherpad.herokuapp.com/p/" + etherpadId + "?showChat=false" height="500px" width="460px" data-etherpad-id=etherpadId)
-      div(id="render", class="col-md-6")
+      div(id="render" class="right-pane")
         h4 #{etherpadId}
         img(id='graph' class="graph-image")
         pre(id="msg", class="alert alert-block")
