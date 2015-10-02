@@ -3,7 +3,7 @@ var needCompile = true;
 var type = 'dot';
 var settings = {
   exportSuffix: '/export/txt',
-  hostRoot: 'http://graphvizrepl-etherpad.herokuapp.com/p/'
+  hostRoot: 'https://pad.systemli.org/p/'
 };
 
 function goToRandom() {
