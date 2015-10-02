@@ -9,3 +9,28 @@ block content
         h4 #{etherpadId}
         img(id='graph' class="graph-image")
         pre(id="msg", class="alert alert-block")
+        .btn-group.dropup.pull-left(style="position:absolute;bottom:5px;right:5px;")
+          button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            | Layout
+            span.caret
+          ul(class='dropdown-menu')
+            li
+              a(onclick='javascript:setType(this)', type='dot')
+                span ✓
+                |dot
+            li
+              a(onclick='javascript:setType(this)', type='neato')
+                span 　
+                |neato
+            li
+              a(onclick='javascript:setType(this)', type='circo')
+                span 　
+                | circo
+            li
+              a(onclick='javascript:setType(this)', type='fdp')
+                span 　
+                | fdp
+            li
+              a(onclick='javascript:setType(this)', type='sfdp')
+                span 　
+                | sfdp
