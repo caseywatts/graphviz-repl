@@ -32,23 +32,27 @@ textarea{
 }
 
 .left-pane {
-  width:50vw;
-  height:85vh;
-  position:absolute;
-  top:70px;
-  left:0;
+  width: 50vw;
+  height: calc(100vh - 50px);
+  position: absolute;
+  top: 50px;
+  left: 0;
 }
 
 .right-pane {
-  width:50vw;
-  height:85vh;
-  position:absolute;
-  top:70px;
-  right:0;
+  width: 50vw;
+  height: calc(100vh - 50px);
+  position: absolute;
+  top: 50px;
+  right: 0;
 
 }
 
+.navbar {
+  margin-bottom: 0px;
+}
+
 iframe {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 }
