@@ -31,21 +31,20 @@ textarea{
   box-shadow: 4px 4px 5px #888888;
 }
 
-.left-pane {
-  width: 50vw;
+.full-height-pane {
   height: calc(100vh - 50px);
   position: absolute;
   top: 50px;
+}
+
+.left-pane {
   left: 0;
+  width: 40vw;
 }
 
 .right-pane {
-  width: 50vw;
-  height: calc(100vh - 50px);
-  position: absolute;
-  top: 50px;
   right: 0;
-
+  width: 60vw;
 }
 
 .navbar {

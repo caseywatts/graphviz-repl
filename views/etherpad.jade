@@ -3,9 +3,9 @@ extends layout
 block content
   div(class="container")
     div(id="everything")
-      div(id="editor" class="left-pane")
+      div(id="editor" class="full-height-pane left-pane")
         iframe(src="https://pad.systemli.org/p/" + etherpadId + "?showChat=false" height="500px" width="460px" data-etherpad-id=etherpadId)
-      div(id="render" class="right-pane")
+      div(id="render" class="full-height-pane right-pane")
         h4 #{etherpadId}
         img(id='graph' class="graph-image")
         pre(id="msg", class="alert alert-block")
