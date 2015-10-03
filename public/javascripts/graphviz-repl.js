@@ -6,6 +6,12 @@ var settings = {
   hostRoot: 'https://pad.systemli.org/p/'
 };
 
+function goToRoom(_this) {
+  var roomName = $(_this).find('input').val();
+  window.location = "/" + roomName;
+  return false;
+}
+
 function goToRandom() {
   window.location = "/" + randomPadName();
 }

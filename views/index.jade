@@ -13,12 +13,12 @@ block content
           .col-md-7
             h2 Make A Room
             p
-              form.form-inline
+              form.form-inline(onsubmit='return goToRoom(this)')
                 .form-group
                   .input-group
                     .input-group-addon.tight-on-the-right graphvizrepl.com/
-                    input.form-control.tight-on-the-left(type='text', placeholder='my-silly-name')
-                  button.btn.btn-primary(type='submit') Go
+                    input.form-control.tight-on-the-left(type='text', placeholder='my-silly-name' required)
+                  button.btn.btn-primary(type="submit") Go
             p
               small You can also go to the room directly from your browser's URL bar.
           .col-md-5
