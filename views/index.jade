@@ -10,15 +10,23 @@ block content
         small Realtime Text-To-Diagram
       .container
         .row
-          .col-md-6
-            h2 Named Room
-            p To go to a room "my-silly-name", type in the URL bar above:
-            pre graphvizrepl.com/my-silly-name
-          .col-md-6
-            h2 Random Room
-            p We'll generate a random name for your room.
+          .col-md-7
+            h2 Make A Room
             p
-              a(class='btn btn-default' onclick='goToRandom()') Generate A Randomly Named REPL
+              form.form-inline
+                .form-group
+                  .input-group
+                    .input-group-addon.tight-on-the-right graphvizrepl.com/
+                    input.form-control.tight-on-the-left(type='text', placeholder='my-silly-name')
+                  button.btn.btn-primary(type='submit') Go
+            p
+              small You can also go to the room directly from your browser's URL bar.
+          .col-md-5
+            h2 &nbsp;
+            p
+              a(class='btn btn-primary' onclick='goToRandom()') Randomly Named Room
+            p
+              small Or, we'll generate a random one for you.
   .container
     .row
       h2 Parts

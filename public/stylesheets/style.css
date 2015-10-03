@@ -55,3 +55,11 @@ iframe {
   width: 100%;
   height: 100%;
 }
+
+.tight-on-the-right {
+  padding-right: 4px;
+}
+
+.tight-on-the-left {
+  padding-left: 4px;
+}
