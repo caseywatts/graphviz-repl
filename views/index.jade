@@ -29,25 +29,23 @@ block content
               small Or, we'll generate a random one for you.
   .container
     .row
-      h2 Parts
-      .col-md-12
+      h1 Made of Three Things
+      .col-md-4
+        h2 Etherpad
         p Etherpad, a realtime collaborative text editor (like Google Docs).
-        p Graphviz, a diagram markup language (like markdown).
-        p We'll generate a random room for you with some random letters and numbers. This is semi-private in that other people will have trouble guessing your room name (although still public and discoverable if someone is lucky enough to guess it).
-    .row
-      h2 Examples
-      .col-md-4
-        p Realtime collaborative editor for a simple graph vizualization markup language.
-        pre "digraph { A -> B }"
-    .row
-      h2 More Info
-      .col-md-4
-        h3 Its Parts
-        p Graphviz is a graph vizualization markup language - sort of like markdown for diagrams
         p Etherpad is a realtime collaborative text editor, like Google Docs. Anyone viewing the same Etherpad as you will see theirs updated in realtime for every change you make.
-        p REPL stands for 'Read Evaluate Print Loop' - it's a computery jargony term that sorta means the code runs as you write it (as opposed to being 'compiled' - although graphviz is technically compiled).
-      .col-md-4
-        p Every change you make to the etherpad document (left pane) auto-generates a graphviz diagram (right pane).
         p Each 'room' on graphviz-repl matches an etherpad document with the same name.
+      .col-md-4
+        h2 Graphviz
+        p Graphviz, a diagram markup language (like markdown).
+        p Graphviz is a graph vizualization markup language - sort of like markdown for diagrams
         p Graphviz has 5 different styles of layout. The most popular/common is 'dot' and that's the default. To try the others, toggle the 'Layout' above.
-
+      .col-md-4
+        h2 REPL
+        p REPL stands for 'Read Evaluate Print Loop' - it's a computery jargony term that sorta means the code runs as you write it (as opposed to being 'compiled' - although graphviz is technically compiled).
+        p Our REPL here is javascript in the browser that checks for changes multiple times each second. If there are changes, we ask our server to render the new image for you.
+        p Every change you make to the etherpad document (left pane) auto-generates a graphviz diagram (right pane).
+    .row
+      h1 Examples
+      .col-md-12
+        pre "digraph { A -> B }"
