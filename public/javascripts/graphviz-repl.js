@@ -79,28 +79,29 @@ var etherpadWhisperer = {
 
 // GRAPHVIZ RENDERER
 
-function error (text){
-  var errArea = $('#msg');
-  if(text){
-    errArea.text(text);
-    errArea.fadeIn();
-  }else{
-    errArea.fadeOut();
+var userInterfaceInteractor = {
+  error: function (text){
+    var errArea = $('#msg');
+    if(text){
+      errArea.text(text);
+      errArea.fadeIn();
+    }else{
+      errArea.fadeOut();
+    }
+  },
+  setType: function (selected){
+    type = $(selected).attr('type');
+    var items = $(selected).parent().parent().children();
+    items.each(function(e){
+      $($($(items[e]).children()[0]).children()[0]).text('　');
+    });
+    $($(selected).children()[0]).text('✓');
+    needCompile = true;
+  },
+  getType: function (){
+    return type;
   }
-}
-
-function setType (selected){
-  type = $(selected).attr('type');
-  var items = $(selected).parent().parent().children();
-  items.each(function(e){
-    $($($(items[e]).children()[0]).children()[0]).text('　');
-  });
-  $($(selected).children()[0]).text('✓');
-  needCompile = true;
-}
-function getType (){
-  return type;
-}
+};
 
 var graphRenderer = {
   compile: function (dotData, cb){
@@ -112,11 +113,11 @@ var graphRenderer = {
       type: 'POST',
       url: '/compile.b64',
       data: {dot: dotData,
-        type: getType()},
+        type: userInterfaceInteractor.getType()},
         success: function(data, textStatus, jqXHR){
           compiling = false;
           $('#graph').attr('src',data);
-          error();
+          userInterfaceInteractor.error();
           if(cb){
             cb();
           }
@@ -124,7 +125,7 @@ var graphRenderer = {
         error: function(jqXHR, textStatus, errorThrown){
           compiling = false;
           if(jqXHR.status == 400){
-            error(jqXHR.responseText);
+            userInterfaceInteractor.error(jqXHR.responseText);
             $('#graph').attr('src','/no_such_path');
           }
           if(cb){
@@ -153,9 +154,9 @@ var graphRenderer = {
         return;
       }
       graphRenderer.compile(_newDotData,
-                   function(){
-                     needCompile = false;
-                   });
+                            function(){
+                              needCompile = false;
+                            });
     });
   },
 };
