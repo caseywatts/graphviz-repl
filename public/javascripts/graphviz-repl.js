@@ -3,28 +3,27 @@ var needCompile = true;
 var type = 'dot';
 
 // ROOM LOGIC
-function goToRoom(_this) {
-  var roomName = $(_this).find('input').val();
-  window.location = "/" + roomName;
-  return false;
-}
-
-function goToRandom() {
-  window.location = "/" + randomPadName();
-}
-
-function randomPadName() {
-  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  var string_length = 10;
-  var randomstring = '';
-  for (var i = 0; i < string_length; i++)
-  {
-    var rnum = Math.floor(Math.random() * chars.length);
-    randomstring += chars.substring(rnum, rnum + 1);
+var roomNavigator = {
+  goToRoom: function (_this) {
+    var roomName = $(_this).find('input').val();
+    window.location = "/" + roomName;
+    return false;
+  },
+  goToRandom: function () {
+    window.location = "/" + this.randomPadName();
+  },
+  randomPadName: function () {
+    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var string_length = 10;
+    var randomstring = '';
+    for (var i = 0; i < string_length; i++)
+    {
+      var rnum = Math.floor(Math.random() * chars.length);
+      randomstring += chars.substring(rnum, rnum + 1);
+    }
+    return randomstring;
   }
-  return randomstring;
-}
-
+};
 
 // ETHERPAD IMPORT/EXPORT LOGIC
 var etherpadWhisperer = {

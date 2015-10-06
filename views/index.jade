@@ -13,7 +13,7 @@ block content
           .col-md-7
             h2 Make A Room
             p
-              form.form-inline(onsubmit='return goToRoom(this)')
+              form.form-inline(onsubmit='return roomNavigator.goToRoom(this)')
                 .form-group
                   .input-group
                     .input-group-addon.tight-on-the-right graphvizrepl.com/
@@ -24,7 +24,7 @@ block content
           .col-md-5
             h2 &nbsp;
             p
-              a(class='btn btn-primary' onclick='goToRandom()') Randomly Named Room
+              a(class='btn btn-primary' onclick='roomNavigator.goToRandom()') Randomly Named Room
             p
               small Or, we'll generate a random one for you.
   .container
