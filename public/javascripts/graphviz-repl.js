@@ -186,37 +186,38 @@ var cacheWhisperer = {
 // SVG to PNG
 
 // Takes an SVG element as target
-function svg_to_png_data(target) {
-  var ctx, mycanvas, svg_data, img, child;
+var svgToPngConverter = {
+  svg_to_png_data: function (target) {
+    var ctx, mycanvas, svg_data, img, child;
 
-  // Construct an SVG image
-  var new_width = target.width.baseVal.valueInSpecifiedUnits;
-  var new_height = target.height.baseVal.valueInSpecifiedUnits;
+    // Construct an SVG image
+    var new_width = target.width.baseVal.valueInSpecifiedUnits;
+    var new_height = target.height.baseVal.valueInSpecifiedUnits;
 
-  svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + new_width +
-  '" height="' + new_height + '">' + target.innerHTML + '</svg>';
-  img = new Image();
-  img.src = "data:image/svg+xml;utf8," + svg_data;
+    svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + new_width +
+    '" height="' + new_height + '">' + target.innerHTML + '</svg>';
+    img = new Image();
+    img.src = "data:image/svg+xml;utf8," + svg_data;
 
-  // Draw the SVG image to a canvas
-  mycanvas = document.createElement('canvas');
-  mycanvas.width = new_width;
-  mycanvas.height = new_height;
-  ctx = mycanvas.getContext("2d");
-  ctx.drawImage(img, 0, 0);
+    // Draw the SVG image to a canvas
+    mycanvas = document.createElement('canvas');
+    mycanvas.width = new_width;
+    mycanvas.height = new_height;
+    ctx = mycanvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
 
-  // Return the canvas's data
-  return mycanvas.toDataURL("image/png");
-}
-// Takes an SVG element as target
-function svg_to_png_replace(target) {
-  var data, img;
-  data = svg_to_png_data(target);
-  img = new Image();
-  img.src = data;
-  target.parentNode.replaceChild(img, target);
-}
-
+    // Return the canvas's data
+    return mycanvas.toDataURL("image/png");
+  },
+  // Takes an SVG element as target
+  svg_to_png_replace: function (target) {
+    var data, img;
+    data = this.svg_to_png_data(target);
+    img = new Image();
+    img.src = data;
+    target.parentNode.replaceChild(img, target);
+  }
+};
 
 $(document).ready(function(){
   graphRenderer.autoCompileDo();
