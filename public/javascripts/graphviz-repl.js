@@ -3,6 +3,7 @@ var needCompile = true;
 var type = 'dot';
 var settings = {
   exportSuffix: '/export/txt',
+  importSuffix: '/import',
   hostRoot: 'https://pad.systemli.org/p/'
 };
 
@@ -29,9 +30,29 @@ function randomPadName()
   return randomstring;
 }
 
+function txtImportPath(padName) {
+  return settings.hostRoot + padName + settings.importSuffix;
+}
 
 function txtExportPath(padName) {
   return settings.hostRoot + padName + settings.exportSuffix;
+}
+
+function txtImportToPad(padName, data) {
+  var url = txtImportPath(padName);
+  $.ajax(
+    {
+      url: url,
+      type: "post",
+      processData: false,
+      async: false,
+      contentType: 'multipart/form-data; boundary=boundary',
+      accepts: {
+        text: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+      },
+      data: 'Content-Type: multipart/form-data; boundary=--boundary\r\n\r\n--boundary\r\nContent-Disposition: form-data; name="file"; filename="import.txt"\r\nContent-Type: text/plain\r\n\r\n' + data + '\r\n\r\n--boundary'
+    }
+  );
 }
 
 function error(text){
