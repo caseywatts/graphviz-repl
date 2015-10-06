@@ -79,7 +79,7 @@ var etherpadWhisperer = {
 
 // GRAPHVIZ RENDERER
 
-function error(text){
+function error (text){
   var errArea = $('#msg');
   if(text){
     errArea.text(text);
@@ -89,7 +89,7 @@ function error(text){
   }
 }
 
-function setType(selected){
+function setType (selected){
   type = $(selected).attr('type');
   var items = $(selected).parent().parent().children();
   items.each(function(e){
@@ -98,21 +98,21 @@ function setType(selected){
   $($(selected).children()[0]).text('✓');
   needCompile = true;
 }
-
-function getType(){
+function getType (){
   return type;
 }
 
-function compile(dotData, cb){
-  if(compiling){
-    return;
-  }
-  compiling = true;
-  $.ajax({
-    type: 'POST',
-    url: '/compile.b64',
-    data: {dot: dotData,
-           type: getType()},
+var graphRenderer = {
+  compile: function (dotData, cb){
+    if(compiling){
+      return;
+    }
+    compiling = true;
+    $.ajax({
+      type: 'POST',
+      url: '/compile.b64',
+      data: {dot: dotData,
+        type: getType()},
         success: function(data, textStatus, jqXHR){
           compiling = false;
           $('#graph').attr('src',data);
@@ -131,59 +131,57 @@ function compile(dotData, cb){
             cb();
           }
         }
-  });
-}
+    });
+  },
+  autoCompileDo: function (){
+    var etherpadId = $('iframe').data('etherpad-id');
+    $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
+      var _newDotData = data;
+      var _cachedDotData = cacheWhisperer.loadCachedDotData(etherpadId);
+      if(_cachedDotData === null){
+        // if cache is empty, use server data
+        needCompile = true;
+        cacheWhisperer.cacheDotData(etherpadId, _newDotData);
+      }
+      else if(_cachedDotData !== _newDotData){
+        // if this server data hasn't been rendered yet
+        needCompile = true;
+        cacheWhisperer.cacheDotData(etherpadId, _newDotData);
+      }
 
-var _cachedDotData = '';
-function autoCompileDo(){
-  var etherpadId = $('iframe').data('etherpad-id');
-  $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
-    var _newDotData = data;
-    var _cachedDotData = loadCachedDotData(etherpadId);
-    if(_cachedDotData === null){
-      // if cache is empty, use server data
-      needCompile = true;
-      cacheDotData(etherpadId, _newDotData);
-    }
-    else if(_cachedDotData !== _newDotData){
-      // if this server data hasn't been rendered yet
-      needCompile = true;
-      cacheDotData(etherpadId, _newDotData);
-    }
+      if(!needCompile){
+        return;
+      }
+      graphRenderer.compile(_newDotData,
+                   function(){
+                     needCompile = false;
+                   });
+    });
+  },
+};
 
-    if(!needCompile){
-      return;
-    }
-    compile(_newDotData,
-            function(){
-              needCompile = false;
-            });
-  });
-}
-
-function loadCachedDotData(etherpadId) {
-  var _cachedData = localStorage.getItem(etherpadId);
-  if (_cachedData !== null && _cachedData.trim() !== "")
-    return _cachedData;
-  else
-    return null;
-}
-
-function cacheDotData(etherpadId, data) {
-  localStorage.setItem(etherpadId, data);
-}
-
-function defaultData() {
-  return ['digraph noname {',
-    '   node[shape=box]',
-    '   graph[nodesep=2, ranksep=2]',
-    '   graphviz_repl [label="Graphviz-REPL"]',
-    '   you[label="You", shape=circle]',
-    '   graphviz_repl -> you[label="welcome"]',
-    '   {rank=same; graphviz_repl; you}',
-    '}'].join("\n");
-}
-
+var cacheWhisperer = {
+  defaultData: function () {
+    return ['digraph noname {',
+      '   node[shape=box]',
+      '   graph[nodesep=2, ranksep=2]',
+      '   graphviz_repl [label="Graphviz-REPL"]',
+      '   you[label="You", shape=circle]',
+      '   graphviz_repl -> you[label="welcome"]',
+      '   {rank=same; graphviz_repl; you}',
+      '}'].join("\n");
+  },
+  loadCachedDotData: function (etherpadId) {
+    var _cachedData = localStorage.getItem(etherpadId);
+    if (_cachedData !== null && _cachedData.trim() !== "")
+      return _cachedData;
+    else
+      return null;
+  },
+  cacheDotData: function (etherpadId, data) {
+    localStorage.setItem(etherpadId, data);
+  }
+};
 
 // SVG to PNG
 
@@ -196,7 +194,7 @@ function svg_to_png_data(target) {
   var new_height = target.height.baseVal.valueInSpecifiedUnits;
 
   svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + new_width +
-             '" height="' + new_height + '">' + target.innerHTML + '</svg>';
+  '" height="' + new_height + '">' + target.innerHTML + '</svg>';
   img = new Image();
   img.src = "data:image/svg+xml;utf8," + svg_data;
 
@@ -221,6 +219,6 @@ function svg_to_png_replace(target) {
 
 
 $(document).ready(function(){
-  autoCompileDo();
-  setInterval(autoCompileDo, 500);
+  graphRenderer.autoCompileDo();
+  setInterval(graphRenderer.autoCompileDo, 500);
 });
