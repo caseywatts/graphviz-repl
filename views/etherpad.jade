@@ -9,7 +9,7 @@ block content
         h4 #{etherpadId}
         img(id='graph' class="graph-image")
         pre(id="msg", class="alert alert-block")
-        .btn-group.dropup.pull-left(style="position:absolute;bottom:5px;right:5px;")
+        .btn-group.dropup(style="position:absolute;bottom:5px;right:5px;")
           button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             | Layout
             span.caret
@@ -34,3 +34,17 @@ block content
               a(onclick='javascript:setType(this)', type='sfdp')
                 span 　
                 | sfdp
+        .btn-group.pull-right
+          button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            | Tutorials
+            span.caret
+          ul(class='dropdown-menu')
+            li
+              a(onclick='javascript:importTutorial(1)')
+                Simplest Diagrams
+            li
+              a(onclick='javascript:importTutorial(2)')
+                Advanced Attributes
+            li
+              a(onclick='javascript:importTutorial(3)')
+                With Subgraphs

@@ -7,6 +7,14 @@ var settings = {
   hostRoot: 'https://pad.systemli.org/p/'
 };
 
+var tutorials = [
+  {'name': 'Table of Contents'     , 'url': 'https://gist.githubusercontent.com/caseywatts/78e1577fab56d04df8cd/raw/ac81e58f707e7121d76c49b2782baad67645a4d2/0tableOfContents.dot'},
+  {'name': '1 Simplest Diagrams'   , 'url': 'https://gist.githubusercontent.com/caseywatts/78e1577fab56d04df8cd/raw/ac81e58f707e7121d76c49b2782baad67645a4d2/1simplestDiagrams.dot'},
+  {'name': '2 Advanced Attributes' , 'url': 'https://gist.githubusercontent.com/caseywatts/78e1577fab56d04df8cd/raw/ac81e58f707e7121d76c49b2782baad67645a4d2/2advancedAttributes.dot'},
+  {'name': '3 With Subgraphs'      , 'url': 'https://gist.githubusercontent.com/caseywatts/78e1577fab56d04df8cd/raw/ac81e58f707e7121d76c49b2782baad67645a4d2/3withSubgraphs.dot'},
+];
+
+
 function goToRoom(_this) {
   var roomName = $(_this).find('input').val();
   window.location = "/" + roomName;
@@ -59,6 +67,11 @@ function txtImportFromUrl (padName, source_url) {
   $.get(source_url).success(function(data){
     txtImportToPad(padName, data);
   });
+}
+
+function importTutorial (number) {
+  var etherpadId = $('iframe').data('etherpad-id');
+  txtImportFromUrl(etherpadId, tutorials[number].url);
 }
 
 function error(text){
