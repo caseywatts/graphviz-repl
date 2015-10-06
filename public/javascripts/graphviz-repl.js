@@ -107,7 +107,7 @@ function compile(dotData, cb){
           compiling = false;
           if(jqXHR.status == 400){
             error(jqXHR.responseText);
-            $('#graph').attr('src','/no_such_path')
+            $('#graph').attr('src','/no_such_path');
           }
           if(cb){
             cb();
