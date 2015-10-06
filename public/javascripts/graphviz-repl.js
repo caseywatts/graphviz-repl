@@ -55,6 +55,12 @@ function txtImportToPad(padName, data) {
   );
 }
 
+function txtImportFromUrl (padName, source_url) {
+  $.get(source_url).success(function(data){
+    txtImportToPad(padName, data);
+  });
+}
+
 function error(text){
   var errArea = $('#msg');
   if(text){
