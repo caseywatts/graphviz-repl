@@ -1,8 +1,6 @@
 var compiling = false;
 var needCompile = true;
-var type = 'dot';
 
-// ROOM LOGIC
 var roomNavigator = {
   goToRoom: function (_this) {
     var roomName = $(_this).find('input').val();
@@ -25,7 +23,6 @@ var roomNavigator = {
   }
 };
 
-// ETHERPAD IMPORT/EXPORT LOGIC
 var etherpadWhisperer = {
   settings: {
     exportSuffix: '/export/txt',
@@ -77,9 +74,8 @@ var etherpadWhisperer = {
   }
 };
 
-// GRAPHVIZ RENDERER
-
 var userInterfaceInteractor = {
+  type: 'dot',
   error: function (text){
     var errArea = $('#msg');
     if(text){
@@ -90,7 +86,7 @@ var userInterfaceInteractor = {
     }
   },
   setType: function (selected){
-    type = $(selected).attr('type');
+    this.type = $(selected).attr('type');
     var items = $(selected).parent().parent().children();
     items.each(function(e){
       $($($(items[e]).children()[0]).children()[0]).text('　');
@@ -99,7 +95,7 @@ var userInterfaceInteractor = {
     needCompile = true;
   },
   getType: function (){
-    return type;
+    return this.type;
   }
 };
 
@@ -184,10 +180,8 @@ var cacheWhisperer = {
   }
 };
 
-// SVG to PNG
-
-// Takes an SVG element as target
 var svgToPngConverter = {
+  // Takes an SVG element as target
   svg_to_png_data: function (target) {
     var ctx, mycanvas, svg_data, img, child;
 
