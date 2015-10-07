@@ -122,11 +122,9 @@ var userInterfaceInteractor = {
 
 var graphRenderer = {
   successCallback: function(data, textStatus, jqXHR){
-    compiling = false;
     userInterfaceInteractor.displayForSuccess(data);
   },
   errorCallback: function(jqXHR, textStatus, errorThrown){
-    compiling = false;
     if(jqXHR.status == 400){
       userInterfaceInteractor.displayForError(jqXHR.responseText);
     }
