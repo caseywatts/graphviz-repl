@@ -73,6 +73,19 @@ var etherpadWhisperer = {
   }
 };
 
+var cacheWhisperer = {
+  loadCachedDotData: function (etherpadId) {
+    var _cachedData = localStorage.getItem(etherpadId);
+    if (_cachedData !== null && _cachedData.trim() !== "")
+      return _cachedData;
+    else
+      return null;
+  },
+  cacheDotData: function (etherpadId, data) {
+    localStorage.setItem(etherpadId, data);
+  }
+};
+
 var userInterfaceInteractor = {
   _type: 'dot', // this is a default value that may be overwritten
   _errArea: function (){
@@ -173,19 +186,6 @@ var autoCompiler = {
       }
     });
   },
-};
-
-var cacheWhisperer = {
-  loadCachedDotData: function (etherpadId) {
-    var _cachedData = localStorage.getItem(etherpadId);
-    if (_cachedData !== null && _cachedData.trim() !== "")
-      return _cachedData;
-    else
-      return null;
-  },
-  cacheDotData: function (etherpadId, data) {
-    localStorage.setItem(etherpadId, data);
-  }
 };
 
 var svgToPngConverter = {
