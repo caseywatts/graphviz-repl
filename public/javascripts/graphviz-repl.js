@@ -118,7 +118,7 @@ var graphRenderer = {
       cb();
     }
   },
-  compile: function (dotData, cb){
+  compile: function (dotData, type, cb){
     if(compiling){
       return;
     }
@@ -128,7 +128,7 @@ var graphRenderer = {
       url: '/compile.b64',
       data: {
         dot: dotData,
-        type: userInterfaceInteractor.getType()
+        type: type
       }
     })
     .done(this.successCallback)
@@ -154,6 +154,7 @@ var graphRenderer = {
         return;
       }
       graphRenderer.compile(_newDotData,
+                            userInterfaceInteractor.getType(),
                             function(){
                               needCompile = false;
                             });
