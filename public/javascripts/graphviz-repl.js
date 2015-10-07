@@ -76,14 +76,13 @@ var etherpadWhisperer = {
 
 var userInterfaceInteractor = {
   type: 'dot',
+  _errArea: $('#msg'),
   error: function (text){
-    var errArea = $('#msg');
-    if(text){
-      errArea.text(text);
-      errArea.fadeIn();
-    }else{
-      errArea.fadeOut();
-    }
+    this._errArea.fadeOut();
+  },
+  displayError: function (text){
+    this._errArea.text(text);
+    this._errArea.fadeIn();
   },
   setType: function (selected){
     this.type = $(selected).attr('type');
@@ -96,14 +95,20 @@ var userInterfaceInteractor = {
   },
   getType: function (){
     return this.type;
+  },
+  displayNoImage: function (){
+    $('#graph').attr('src','/no_such_path');
+  },
+  renderGraph: function (data){
+    $('#graph').attr('src',data);
   }
 };
 
 var graphRenderer = {
   successCallback: function(data, textStatus, jqXHR){
     compiling = false;
-    $('#graph').attr('src',data);
-    userInterfaceInteractor.error();
+    userInterfaceInteractor.renderGraph(data);
+    userInterfaceInteractor.hideError();
     if(cb){
       cb();
     }
@@ -111,8 +116,8 @@ var graphRenderer = {
   errorCallback: function(jqXHR, textStatus, errorThrown){
     compiling = false;
     if(jqXHR.status == 400){
-      userInterfaceInteractor.error(jqXHR.responseText);
-      $('#graph').attr('src','/no_such_path');
+      userInterfaceInteractor.displayNoImage();
+      userInterfaceInteractor.displayError(jqXHR.responseText);
     }
     if(cb){
       cb();
