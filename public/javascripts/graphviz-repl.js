@@ -134,7 +134,29 @@ var cacheWhisperer = {
 };
 
 var graphRenderer = {
-  compile: function (dotData, type){
+  renderIfNeeded: function (etherpadId){
+    var _this = this;
+    $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
+      var _newDotData = data;
+      var _cachedDotData = cacheWhisperer.loadCachedDotData(etherpadId);
+      var _dataHasChanged = _cachedDotData !== _newDotData;
+      var _thisIsTheFirstRender = !userInterfaceInteractor.hasGraphRenderedEvenOnce();
+      if(_thisIsTheFirstRender){
+        _this._cacheAndRender(etherpadId, _newDotData);
+      }
+      else if(_dataHasChanged){
+        _this._cacheAndRender(etherpadId, _newDotData);
+      }
+      else {
+        return;
+      }
+    });
+  },
+  _cacheAndRender: function (etherpadId, _newDotData){
+    cacheWhisperer.cacheDotData(etherpadId, _newDotData);
+    this._compileNewImage(_newDotData, userInterfaceInteractor.getType());
+  },
+  _compileNewImage: function (dotData, type){
     if(compiling){
       return;
     }
@@ -147,42 +169,20 @@ var graphRenderer = {
         type: type
       }
     })
-    .done(this.successCallback)
-    .fail(this.errorCallback)
+    .done(this._successCallback)
+    .fail(this._errorCallback)
     .always(function (){
       compiling = false;
     });
   },
-  successCallback: function(data, textStatus, jqXHR){
+  _successCallback: function(data, textStatus, jqXHR){
     userInterfaceInteractor.displayForSuccess(data);
   },
-  errorCallback: function(jqXHR, textStatus, errorThrown){
+  _errorCallback: function(jqXHR, textStatus, errorThrown){
     if(jqXHR.status == 400){
       userInterfaceInteractor.displayForError(jqXHR.responseText);
     }
-  },
-  cacheAndRender: function (etherpadId, _newDotData){
-    cacheWhisperer.cacheDotData(etherpadId, _newDotData);
-    graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
-  },
-  renderIfNeeded: function (etherpadId){
-    var _this = this;
-    $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
-      var _newDotData = data;
-      var _cachedDotData = cacheWhisperer.loadCachedDotData(etherpadId);
-      var _dataHasChanged = _cachedDotData !== _newDotData;
-      var _thisIsTheFirstRender = !userInterfaceInteractor.hasGraphRenderedEvenOnce();
-      if(_thisIsTheFirstRender){
-        _this.cacheAndRender(etherpadId, _newDotData);
-      }
-      else if(_dataHasChanged){
-        _this.cacheAndRender(etherpadId, _newDotData);
-      }
-      else {
-        return;
-      }
-    });
-  },
+  }
 };
 
 var svgToPngConverter = {
