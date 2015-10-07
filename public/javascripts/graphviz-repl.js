@@ -126,7 +126,7 @@ var userInterfaceInteractor = {
   },
   getEtherpadId: function (){ return $('iframe').data('etherpad-id'); },
   callCompile: function (){
-    autoCompiler.renderIfNeeded(this.getEtherpadId());
+    graphRenderer.renderIfNeeded(this.getEtherpadId());
   },
   graphHasNotRenderedEvenOnce: function (){
     return $('img#graph').attr('src') === undefined;
@@ -160,10 +160,7 @@ var graphRenderer = {
     .always(function (){
       compiling = false;
     });
-  }
-};
-
-var autoCompiler = {
+  },
   cacheAndRender: function (etherpadId, _newDotData){
     cacheWhisperer.cacheDotData(etherpadId, _newDotData);
     graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
