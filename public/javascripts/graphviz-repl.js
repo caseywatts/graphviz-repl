@@ -134,14 +134,6 @@ var cacheWhisperer = {
 };
 
 var graphRenderer = {
-  successCallback: function(data, textStatus, jqXHR){
-    userInterfaceInteractor.displayForSuccess(data);
-  },
-  errorCallback: function(jqXHR, textStatus, errorThrown){
-    if(jqXHR.status == 400){
-      userInterfaceInteractor.displayForError(jqXHR.responseText);
-    }
-  },
   compile: function (dotData, type){
     if(compiling){
       return;
@@ -160,6 +152,14 @@ var graphRenderer = {
     .always(function (){
       compiling = false;
     });
+  },
+  successCallback: function(data, textStatus, jqXHR){
+    userInterfaceInteractor.displayForSuccess(data);
+  },
+  errorCallback: function(jqXHR, textStatus, errorThrown){
+    if(jqXHR.status == 400){
+      userInterfaceInteractor.displayForError(jqXHR.responseText);
+    }
   },
   cacheAndRender: function (etherpadId, _newDotData){
     cacheWhisperer.cacheDotData(etherpadId, _newDotData);
