@@ -1,5 +1,4 @@
 var compiling = false;
-var needCompile = true;
 
 var roomNavigator = {
   goToRoom: function (_this) {
@@ -93,7 +92,7 @@ var userInterfaceInteractor = {
       $($($(items[e]).children()[0]).children()[0]).text('　');
     });
     $($(selected).children()[0]).text('✓');
-    needCompile = true;
+    this.callCompile();
   },
   getType: function (){
     return this._type;
@@ -112,7 +111,13 @@ var userInterfaceInteractor = {
     this.displayNoImage();
     this.displayError(errorText);
   },
-  getEtherpadId: function (){ return $('iframe').data('etherpad-id'); }
+  getEtherpadId: function (){ return $('iframe').data('etherpad-id'); },
+  callCompile: function (){
+    autoCompiler.autoCompiler(this.getEtherpadId());
+  },
+  graphHasNotRenderedEvenOnce: function (){
+    return $('img#graph').attr('src') === undefined;
+  }
 };
 
 var graphRenderer = {
@@ -141,30 +146,37 @@ var graphRenderer = {
     })
     .done(this.successCallback)
     .fail(this.errorCallback)
-    .always(function (){ needCompile = false; });
+    .always(function (){
+      compiling = false;
+    });
   }
 };
 
 var autoCompiler = {
   autoCompile: function (etherpadId){
     $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
+      // if this is the first render or if the cache is stale, render it
+      // otherwise, skip this one
       var _newDotData = data;
       var _cachedDotData = cacheWhisperer.loadCachedDotData(etherpadId);
-      if(_cachedDotData === null){
-        // if cache is empty, use server data
-        needCompile = true;
+      if(userInterfaceInteractor.graphHasNotRenderedEvenOnce()){
+        // if this is the first render
         cacheWhisperer.cacheDotData(etherpadId, _newDotData);
+        graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
       }
+      //if(_cachedDotData === null){
+        //// if cache is empty, render it
+        //cacheWhisperer.cacheDotData(etherpadId, _newDotData);
+        //graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
+      //}
       else if(_cachedDotData !== _newDotData){
         // if this server data hasn't been rendered yet
-        needCompile = true;
         cacheWhisperer.cacheDotData(etherpadId, _newDotData);
+        graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
       }
-
-      if(!needCompile){
+      else {
         return;
       }
-      graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
     });
   },
 };
