@@ -177,16 +177,6 @@ var autoCompiler = {
 };
 
 var cacheWhisperer = {
-  defaultData: function () {
-    return ['digraph noname {',
-      '   node[shape=box]',
-      '   graph[nodesep=2, ranksep=2]',
-      '   graphviz_repl [label="Graphviz-REPL"]',
-      '   you[label="You", shape=circle]',
-      '   graphviz_repl -> you[label="welcome"]',
-      '   {rank=same; graphviz_repl; you}',
-      '}'].join("\n");
-  },
   loadCachedDotData: function (etherpadId) {
     var _cachedData = localStorage.getItem(etherpadId);
     if (_cachedData !== null && _cachedData.trim() !== "")
