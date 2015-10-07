@@ -126,7 +126,7 @@ var graphRenderer = {
       userInterfaceInteractor.displayForError(jqXHR.responseText);
     }
   },
-  compile: function (dotData, type, cb){
+  compile: function (dotData, type){
     if(compiling){
       return;
     }
@@ -164,11 +164,7 @@ var autoCompiler = {
       if(!needCompile){
         return;
       }
-      graphRenderer.compile(_newDotData,
-                            userInterfaceInteractor.getType(),
-                            function(){
-                              needCompile = false;
-                            });
+      graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
     });
   },
 };
