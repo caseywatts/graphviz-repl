@@ -24,15 +24,16 @@ var roomNavigator = {
 
 var userInterfaceInteractor = {
   _type: 'dot', // this is a default value that may be overwritten
-  _errArea: function (){
+  getEtherpadId: function (){ return $('iframe').data('etherpad-id'); },
+  get$errorArea: function (){
     return $('#msg');
   },
   hideError: function (text){
-    this._errArea().fadeOut();
+    this.get$errorArea().fadeOut();
   },
   displayError: function (text){
-    this._errArea().text(text);
-    this._errArea().fadeIn();
+    this.get$errorArea().text(text);
+    this.get$errorArea().fadeIn();
   },
   setType: function (selected){
     this._type = $(selected).attr('type');
@@ -60,7 +61,6 @@ var userInterfaceInteractor = {
     this.displayNoImage();
     this.displayError(errorText);
   },
-  getEtherpadId: function (){ return $('iframe').data('etherpad-id'); },
   callCompile: function (){
     graphRenderer.renderIfNeeded(this.getEtherpadId());
   },
