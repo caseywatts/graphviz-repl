@@ -126,11 +126,13 @@ var graphRenderer = {
     $.ajax({
       type: 'POST',
       url: '/compile.b64',
-      data: {dot: dotData,
-        type: userInterfaceInteractor.getType()},
-        success: graphRenderer.successCallback,
-        error: graphRenderer.errorCallback
-    });
+      data: {
+        dot: dotData,
+        type: userInterfaceInteractor.getType()
+      }
+    })
+    .done(this.successCallback)
+    .fail(this.errorCallback);
   },
   autoCompileDo: function (){
     var etherpadId = $('iframe').data('etherpad-id');
