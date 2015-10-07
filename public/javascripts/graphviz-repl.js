@@ -133,8 +133,11 @@ var graphRenderer = {
     })
     .done(this.successCallback)
     .fail(this.errorCallback);
-  },
-  autoCompileDo: function (){
+  }
+};
+
+var autoCompiler = {
+  autoCompile: function (){
     var etherpadId = $('iframe').data('etherpad-id');
     $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
       var _newDotData = data;
@@ -220,6 +223,6 @@ var svgToPngConverter = {
 };
 
 $(document).ready(function(){
-  graphRenderer.autoCompileDo();
-  setInterval(graphRenderer.autoCompileDo, 500);
+  autoCompiler.autoCompile();
+  setInterval(autoCompiler.autoCompile, 500);
 });
