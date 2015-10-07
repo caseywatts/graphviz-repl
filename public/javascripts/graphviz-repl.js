@@ -100,6 +100,24 @@ var userInterfaceInteractor = {
 };
 
 var graphRenderer = {
+  successCallback: function(data, textStatus, jqXHR){
+    compiling = false;
+    $('#graph').attr('src',data);
+    userInterfaceInteractor.error();
+    if(cb){
+      cb();
+    }
+  },
+  errorCallback: function(jqXHR, textStatus, errorThrown){
+    compiling = false;
+    if(jqXHR.status == 400){
+      userInterfaceInteractor.error(jqXHR.responseText);
+      $('#graph').attr('src','/no_such_path');
+    }
+    if(cb){
+      cb();
+    }
+  },
   compile: function (dotData, cb){
     if(compiling){
       return;
@@ -110,24 +128,8 @@ var graphRenderer = {
       url: '/compile.b64',
       data: {dot: dotData,
         type: userInterfaceInteractor.getType()},
-        success: function(data, textStatus, jqXHR){
-          compiling = false;
-          $('#graph').attr('src',data);
-          userInterfaceInteractor.error();
-          if(cb){
-            cb();
-          }
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          compiling = false;
-          if(jqXHR.status == 400){
-            userInterfaceInteractor.error(jqXHR.responseText);
-            $('#graph').attr('src','/no_such_path');
-          }
-          if(cb){
-            cb();
-          }
-        }
+        success: graphRenderer.successCallback,
+        error: graphRenderer.errorCallback
     });
   },
   autoCompileDo: function (){
