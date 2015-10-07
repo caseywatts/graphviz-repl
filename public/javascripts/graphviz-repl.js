@@ -119,17 +119,11 @@ var graphRenderer = {
   successCallback: function(data, textStatus, jqXHR){
     compiling = false;
     userInterfaceInteractor.displayForSuccess(data);
-    if(cb){
-      cb();
-    }
   },
   errorCallback: function(jqXHR, textStatus, errorThrown){
     compiling = false;
     if(jqXHR.status == 400){
       userInterfaceInteractor.displayForError(jqXHR.responseText);
-    }
-    if(cb){
-      cb();
     }
   },
   compile: function (dotData, type, cb){
@@ -146,7 +140,8 @@ var graphRenderer = {
       }
     })
     .done(this.successCallback)
-    .fail(this.errorCallback);
+    .fail(this.errorCallback)
+    .always(function (){ needCompile = false; });
   }
 };
 
