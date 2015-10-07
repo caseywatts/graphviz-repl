@@ -76,13 +76,15 @@ var etherpadWhisperer = {
 
 var userInterfaceInteractor = {
   _type: 'dot', // this is a default value that may be overwritten
-  _errArea: $('#msg'),
+  _errArea: function (){
+    return $('#msg');
+  },
   error: function (text){
-    this._errArea.fadeOut();
+    this._errArea().fadeOut();
   },
   displayError: function (text){
-    this._errArea.text(text);
-    this._errArea.fadeIn();
+    this._errArea().text(text);
+    this._errArea().fadeIn();
   },
   setType: function (selected){
     this._type = $(selected).attr('type');
