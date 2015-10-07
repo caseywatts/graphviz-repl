@@ -111,7 +111,8 @@ var userInterfaceInteractor = {
   displayForError: function (errorText){
     this.displayNoImage();
     this.displayError(errorText);
-  }
+  },
+  getEtherpadId: function (){ return $('iframe').data('etherpad-id'); }
 };
 
 var graphRenderer = {
@@ -150,8 +151,7 @@ var graphRenderer = {
 };
 
 var autoCompiler = {
-  autoCompile: function (){
-    var etherpadId = $('iframe').data('etherpad-id');
+  autoCompile: function (etherpadId){
     $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
       var _newDotData = data;
       var _cachedDotData = cacheWhisperer.loadCachedDotData(etherpadId);
@@ -226,6 +226,7 @@ var svgToPngConverter = {
 };
 
 $(document).ready(function(){
-  autoCompiler.autoCompile();
-  setInterval(autoCompiler.autoCompile, 500);
+  var etherpadId = userInterfaceInteractor.getEtherpadId();
+  autoCompiler.autoCompile(etherpadId);
+  setInterval(autoCompiler.autoCompile(etherpadId), 500);
 });
