@@ -101,14 +101,21 @@ var userInterfaceInteractor = {
   },
   renderGraph: function (data){
     $('#graph').attr('src',data);
+  },
+  displayForSuccess: function (imageSrc){
+    this.renderGraph(imageSrc);
+    this.hideError();
+  },
+  displayForError: function (errorText){
+    this.displayNoImage();
+    this.displayError(errorText);
   }
 };
 
 var graphRenderer = {
   successCallback: function(data, textStatus, jqXHR){
     compiling = false;
-    userInterfaceInteractor.renderGraph(data);
-    userInterfaceInteractor.hideError();
+    userInterfaceInteractor.displayForSuccess(data);
     if(cb){
       cb();
     }
@@ -116,8 +123,7 @@ var graphRenderer = {
   errorCallback: function(jqXHR, textStatus, errorThrown){
     compiling = false;
     if(jqXHR.status == 400){
-      userInterfaceInteractor.displayNoImage();
-      userInterfaceInteractor.displayError(jqXHR.responseText);
+      userInterfaceInteractor.displayForError(jqXHR.responseText);
     }
     if(cb){
       cb();
