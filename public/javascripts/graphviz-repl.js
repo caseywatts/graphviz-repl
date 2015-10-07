@@ -113,7 +113,7 @@ var userInterfaceInteractor = {
   },
   getEtherpadId: function (){ return $('iframe').data('etherpad-id'); },
   callCompile: function (){
-    autoCompiler.autoCompiler(this.getEtherpadId());
+    autoCompiler.renderIfNeeded(this.getEtherpadId());
   },
   graphHasNotRenderedEvenOnce: function (){
     return $('img#graph').attr('src') === undefined;
@@ -151,26 +151,22 @@ var graphRenderer = {
 };
 
 var autoCompiler = {
-  autoCompile: function (etherpadId){
+  cacheAndRender: function (etherpadId, _newDotData){
+    cacheWhisperer.cacheDotData(etherpadId, _newDotData);
+    graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
+  },
+  renderIfNeeded: function (etherpadId){
+    var _this = this;
     $.get(etherpadWhisperer.txtExportPath(etherpadId), function( data ) {
-      // if this is the first render or if the cache is stale, render it
-      // otherwise, skip this one
       var _newDotData = data;
       var _cachedDotData = cacheWhisperer.loadCachedDotData(etherpadId);
-      if(userInterfaceInteractor.graphHasNotRenderedEvenOnce()){
-        // if this is the first render
-        cacheWhisperer.cacheDotData(etherpadId, _newDotData);
-        graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
+      var _dataHasChanged = _cachedDotData !== _newDotData;
+      var _thisIsTheFirstRender = userInterfaceInteractor.graphHasNotRenderedEvenOnce();
+      if(_thisIsTheFirstRender){
+        _this.cacheAndRender(etherpadId, _newDotData);
       }
-      //if(_cachedDotData === null){
-        //// if cache is empty, render it
-        //cacheWhisperer.cacheDotData(etherpadId, _newDotData);
-        //graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
-      //}
-      else if(_cachedDotData !== _newDotData){
-        // if this server data hasn't been rendered yet
-        cacheWhisperer.cacheDotData(etherpadId, _newDotData);
-        graphRenderer.compile(_newDotData, userInterfaceInteractor.getType());
+      else if(_dataHasChanged){
+        _this.cacheAndRender(etherpadId, _newDotData);
       }
       else {
         return;
@@ -228,6 +224,6 @@ var svgToPngConverter = {
 
 $(document).ready(function(){
   var etherpadId = userInterfaceInteractor.getEtherpadId();
-  autoCompiler.autoCompile(etherpadId);
-  setInterval(function(){autoCompiler.autoCompile(etherpadId);}, 500);
+  autoCompiler.renderIfNeeded(etherpadId);
+  setInterval(function(){autoCompiler.renderIfNeeded(etherpadId);}, 500);
 });
