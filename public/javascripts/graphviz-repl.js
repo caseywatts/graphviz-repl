@@ -79,7 +79,7 @@ var userInterfaceInteractor = {
   _errArea: function (){
     return $('#msg');
   },
-  error: function (text){
+  hideError: function (text){
     this._errArea().fadeOut();
   },
   displayError: function (text){
