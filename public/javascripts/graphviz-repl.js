@@ -75,7 +75,7 @@ var etherpadWhisperer = {
 };
 
 var userInterfaceInteractor = {
-  type: 'dot',
+  _type: 'dot', // this is a default value that may be overwritten
   _errArea: $('#msg'),
   error: function (text){
     this._errArea.fadeOut();
@@ -85,7 +85,7 @@ var userInterfaceInteractor = {
     this._errArea.fadeIn();
   },
   setType: function (selected){
-    this.type = $(selected).attr('type');
+    this._type = $(selected).attr('type');
     var items = $(selected).parent().parent().children();
     items.each(function(e){
       $($($(items[e]).children()[0]).children()[0]).text('　');
@@ -94,7 +94,7 @@ var userInterfaceInteractor = {
     needCompile = true;
   },
   getType: function (){
-    return this.type;
+    return this._type;
   },
   displayNoImage: function (){
     $('#graph').attr('src','/no_such_path');
