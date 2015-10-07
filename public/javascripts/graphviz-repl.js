@@ -223,7 +223,6 @@ var svgToPngConverter = {
 };
 
 $(document).ready(function(){
-  var etherpadId = userInterfaceInteractor.getEtherpadId();
-  autoCompiler.renderIfNeeded(etherpadId);
-  setInterval(function(){autoCompiler.renderIfNeeded(etherpadId);}, 500);
+  userInterfaceInteractor.callCompile();
+  setInterval(function(){userInterfaceInteractor.callCompile();}, 500);
 });
