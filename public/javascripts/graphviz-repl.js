@@ -229,5 +229,5 @@ var svgToPngConverter = {
 $(document).ready(function(){
   var etherpadId = userInterfaceInteractor.getEtherpadId();
   autoCompiler.autoCompile(etherpadId);
-  setInterval(autoCompiler.autoCompile(etherpadId), 500);
+  setInterval(function(){autoCompiler.autoCompile(etherpadId);}, 500);
 });
