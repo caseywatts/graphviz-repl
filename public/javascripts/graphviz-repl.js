@@ -47,14 +47,17 @@ var userInterfaceInteractor = {
   getType: function (){
     return this._type;
   },
+  hasGraphRenderedEvenOnce: function (){
+    return $('img#graph').attr('src') === undefined;
+  },
   displayNoImage: function (){
     $('#graph').attr('src','/no_such_path');
   },
-  renderGraph: function (data){
+  displayImage: function (data){
     $('#graph').attr('src',data);
   },
   displayForSuccess: function (imageSrc){
-    this.renderGraph(imageSrc);
+    this.displayImage(imageSrc);
     this.hideError();
   },
   displayForError: function (errorText){
@@ -63,9 +66,6 @@ var userInterfaceInteractor = {
   },
   callCompile: function (){
     graphRenderer.renderIfNeeded(this.getEtherpadId());
-  },
-  graphHasNotRenderedEvenOnce: function (){
-    return $('img#graph').attr('src') === undefined;
   }
 };
 
@@ -171,7 +171,7 @@ var graphRenderer = {
       var _newDotData = data;
       var _cachedDotData = cacheWhisperer.loadCachedDotData(etherpadId);
       var _dataHasChanged = _cachedDotData !== _newDotData;
-      var _thisIsTheFirstRender = userInterfaceInteractor.graphHasNotRenderedEvenOnce();
+      var _thisIsTheFirstRender = !userInterfaceInteractor.hasGraphRenderedEvenOnce();
       if(_thisIsTheFirstRender){
         _this.cacheAndRender(etherpadId, _newDotData);
       }
