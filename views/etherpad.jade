@@ -6,7 +6,7 @@ block content
       div(id="editor" class="full-height-pane left-pane")
         iframe(src="https://pad.systemli.org/p/" + etherpadId + "?showChat=false" height="500px" width="460px" data-etherpad-id=etherpadId)
       div(id="render" class="full-height-pane right-pane")
-        div.render-pane-buttons
+        div.render-pane-header
           .btn-group
             button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               | Set Layout
@@ -46,6 +46,6 @@ block content
               li
                 a(onclick='javascript:etherpadWhisperer.importTutorial(3)').
                   With Subgraphs
-        h4 #{etherpadId}
+          code.this-page-link graphvizrepl.com/#{etherpadId}
         img(id='graph' class="graph-image")
         pre(id="msg", class="alert alert-block")

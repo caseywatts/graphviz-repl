@@ -72,7 +72,13 @@ iframe {
   max-height: 100%;
 }
 
-.render-pane-buttons {
+.render-pane-header {
   margin-left: 20px;
   text-align: left;
+  margin-bottom: 10px;
+}
+
+.this-page-link {
+  display:inline-block;
+  margin-left:15px;
 }
