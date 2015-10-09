@@ -158,7 +158,7 @@ var graphRenderer = {
     this._compileNewImage(_newDotData, userInterfaceInteractor.getType());
   },
   _compileNewImage: function (dotData, type){
-    this._compileToSVG(dotData, type);
+    this._compileFromServer(dotData, type);
   },
   _compileFromServer: function (dotData, type){
     if(compiling){
