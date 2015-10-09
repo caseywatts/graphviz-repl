@@ -32,19 +32,16 @@ block content
       h1 Made of Three Things
       .col-md-4
         h2 Etherpad
-        p Etherpad, a realtime collaborative text editor (like Google Docs).
         p Etherpad is a realtime collaborative text editor, like Google Docs. Anyone viewing the same Etherpad as you will see theirs updated in realtime for every change you make.
         p Each 'room' on graphviz-repl matches an etherpad document with the same name.
       .col-md-4
         h2 Graphviz
-        p Graphviz, a diagram markup language (like markdown).
-        p Graphviz is a graph vizualization markup language - sort of like markdown for diagrams
-        p Graphviz has 5 different styles of layout. The most popular/common is 'dot' and that's the default. To try the others, toggle the 'Layout' above.
+        p Graphviz is a graph vizualization markup language - like markdown for diagrams. Graphviz has 5 different styles of layout. The most popular/common is 'dot' and that's the default.
       .col-md-4
         h2 REPL
-        p REPL stands for 'Read Evaluate Print Loop' - it's a computery jargony term that sorta means the code runs as you write it (as opposed to being 'compiled' - although graphviz is technically compiled).
-        p Our REPL here is javascript in the browser that checks for changes multiple times each second. If there are changes, we ask our server to render the new image for you.
+        p REPL stands for 'Read Evaluate Print Loop' - it's a jargony term that means the code runs as you write each line, as opposed to being 'compiled'. Graphviz is technically completely re-compiled each time, so this isn't a true REPL - it just feels like one.
         p Every change you make to the etherpad document (left pane) auto-generates a graphviz diagram (right pane).
+        p Our REPL here is javascript running in the browser that checks for changes frequently - multiple times each second. If there are changes, our server renders the new image for you.
     .row
       h1 Tutorials
       p These are also available within a REPL - there is a "Tutorials" button that will copy-paste in each of these examples so you can manipulate them.
