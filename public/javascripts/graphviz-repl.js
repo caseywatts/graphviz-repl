@@ -184,33 +184,14 @@ var graphRenderer = {
       return;
     }
     compiling = true;
-    var src = dotData;
-    var svg_data = Viz(src, {'format':"svg", 'engine': type});
-    var png_data = svgToPngConverter.svg_to_png_data_2(svg_data);
-    this._successCallback(png_data);
-    compiling = false;
-    //$.ajax({
-      //type: 'POST',
-      //url: '/compile.b64',
-      //data: {
-        //dot: dotData,
-        //type: type
-      //}
-    //})
-    //.done(this._successCallback)
-    //.fail(this._errorCallback)
-    //.always(function (){
-      //compiling = false;
-    //});
-
-  },
-  _successCallback: function(data, textStatus, jqXHR){
-    userInterfaceInteractor.displayForSuccess(data);
-  },
-  _errorCallback: function(jqXHR, textStatus, errorThrown){
-    if(jqXHR.status == 400){
-      userInterfaceInteractor.displayForError(jqXHR.responseText);
+    try {
+      var svg_data = Viz(dotData, {'format':"svg", 'engine': type});
+      var png_data = svgToPngConverter.svg_to_png_data_2(svg_data);
+      userInterfaceInteractor.displayForSuccess(png_data);
+    } catch (e) {
+      userInterfaceInteractor.displayForError("Couldn't compile this graphviz");
     }
+    compiling = false;
   }
 };
 
