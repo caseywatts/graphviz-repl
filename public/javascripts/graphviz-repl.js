@@ -50,6 +50,9 @@ var userInterfaceInteractor = {
   hasGraphRenderedEvenOnce: function (){
     return $('img#graph').attr('src') !== undefined;
   },
+  displayNoImage: function (){
+    $('#graph').attr('src','/no_such_path');
+  },
   greyOutImage: function (){
     $('#graph').css('opacity', '.2');
   },
