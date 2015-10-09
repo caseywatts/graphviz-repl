@@ -102,8 +102,9 @@ var etherpadWhisperer = {
   },
 
   txtImportFromUrl: function (padName, source_url) {
+    var _this = this;
     $.get(source_url).success(function(data){
-      this.txtImportToPad(padName, data);
+      _this.txtImportToPad(padName, data);
     });
   },
 
