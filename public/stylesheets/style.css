@@ -30,6 +30,8 @@ textarea{
   border-style: solid;
   border-width: 1px;
   box-shadow: 4px 4px 5px #888888;
+  opacity: 1;
+  transition: opacity 3s fade-in-out;
 }
 
 .full-height-pane {

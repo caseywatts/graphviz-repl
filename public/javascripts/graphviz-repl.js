@@ -50,18 +50,22 @@ var userInterfaceInteractor = {
   hasGraphRenderedEvenOnce: function (){
     return $('img#graph').attr('src') !== undefined;
   },
-  displayNoImage: function (){
-    $('#graph').attr('src','/no_such_path');
+  greyOutImage: function (){
+    $('#graph').css('opacity', '.2');
+  },
+  unGreyOutImage: function (){
+    $('#graph').css('opacity', '1');
   },
   displayImage: function (data){
-    $('#graph').attr('src',data);
+    $('#graph').attr('src', data);
   },
   displayForSuccess: function (imageSrc){
     this.displayImage(imageSrc);
+    this.unGreyOutImage();
     this.hideError();
   },
   displayForError: function (errorText){
-    this.displayNoImage();
+    this.greyOutImage();
     this.displayError(errorText);
   },
   callCompile: function (){
