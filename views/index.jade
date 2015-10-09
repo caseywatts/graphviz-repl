@@ -46,6 +46,89 @@ block content
         p Our REPL here is javascript in the browser that checks for changes multiple times each second. If there are changes, we ask our server to render the new image for you.
         p Every change you make to the etherpad document (left pane) auto-generates a graphviz diagram (right pane).
     .row
-      h1 Examples
-      .col-md-12
-        pre "digraph { A -> B }"
+      h1 Tutorials
+      p These are also available within a REPL - there is a "Tutorials" button that will copy-paste in each of these examples so you can manipulate them.
+    .row
+      h3 Simple Diagrams
+      .col-md-6
+        pre.
+          digraph SimplestDiagrams {
+            ### Here are 4 "nodes" and 5 "connections":
+            A -> B -> C
+            C -> D
+            B -> A
+            B -> D
+
+            manySimpleDiagrams -> canBeExpressed -> usingJustCapitalization
+            usingJustCapitalization -> like
+            like -> MixedCase
+            like -> camelCase
+
+            manySimpleDiagrams ->  "might use" -> "'multiple words' in quotes"
+          }
+
+          # comments start with either # or //
+          // take your pick :D
+          // ### using three #'s might help things line up visually
+          // ### everything must be in a digraph{}
+
+      .col-md-6
+        img.fit-container(src='images/tutorial_1_simple.png')
+    .row
+      h3 Attributes
+      .col-md-6
+        pre.
+          digraph AdvancedAttributes {
+
+            ### LABELS
+            ### "c" is this node's "node name" or "nickname"
+            ### "label" is the text that shows up inside the circle/node/shape
+            c [label="the letter c"]
+            c -> d
+
+            ### STYLE & COLOR
+            d [label="DeeDee"]
+            d [style=dotted]
+            d [color=orange]
+
+            ### MULTIPLE STYLES
+            e [label="The Big E" style=dashed color=purple]
+            f [
+              label="Effff (f)"
+              style=dashed
+              color=purple
+            ]
+
+            ### STYLING LINES
+            g -> h -> i [label="comes before" style="dotted" color="purple"]
+          }
+      .col-md-6
+        img.fit-container(src='images/tutorial_2_attributes.png')
+    .row
+      h3 Subgraphs
+      .col-md-6
+        pre.
+          digraph FancyOneWithSubgraphs {
+            O -> P
+            ### to make a subgraph with a box around its contents
+            ### you must have "subgraph" and "cluster..." present as in this example
+            ### if you forget cluster in your clustername it will never show up
+            subgraph clusterSomeClusterName {
+            label="title about why these are grouped in here"
+            style="dotted"
+            P -> Q -> R
+            }
+
+            ### graphviz doesn't mind if you do things outside of a subgraph
+            R [label = "Rrrrrr"]
+
+            ### If a node is ever used/described/declared inside a subgraph,
+            ### it will always appear within that subgraph.
+            R -> S
+
+            ### Note: you may want to point to/from a subgraph itself
+            ### sorry you can't really :/
+            ### you can only point to/from the specific nodes inside of it
+          }
+      .col-md-6
+        img.fit-container(src='images/tutorial_2_attributes.png')
