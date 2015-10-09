@@ -6,11 +6,8 @@ block content
       div(id="editor" class="full-height-pane left-pane")
         iframe(src="https://pad.systemli.org/p/" + etherpadId + "?showChat=false" height="500px" width="460px" data-etherpad-id=etherpadId)
       div(id="render" class="full-height-pane right-pane")
-        h4 #{etherpadId}
-        img(id='graph' class="graph-image")
-        pre(id="msg", class="alert alert-block")
-        div(style="position:absolute; bottom: 5px; right: 5px;")
-          .btn-group.dropup
+        div.render-pane-buttons
+          .btn-group
             button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               | Layout
               span.caret
@@ -35,7 +32,7 @@ block content
                 a(onclick='javascript:userInterfaceInteractor.setType(this)', type='sfdp')
                   span 　
                   | sfdp
-          .btn-group.dropup.pull-right
+          .btn-group
             button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               | Import Tutorial
               span.caret
@@ -49,3 +46,6 @@ block content
               li
                 a(onclick='javascript:etherpadWhisperer.importTutorial(3)')
                   With Subgraphs
+        h4 #{etherpadId}
+        img(id='graph' class="graph-image")
+        pre(id="msg", class="alert alert-block")
