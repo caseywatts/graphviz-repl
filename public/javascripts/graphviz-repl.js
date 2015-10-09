@@ -193,7 +193,7 @@ var graphRenderer = {
     compiling = true;
     try {
       var svg_data = Viz(dotData, {'format':"svg", 'engine': type});
-      var png_data = svgToPngConverter.svg_to_png_data_2(svg_data);
+      var png_data = svgToPngConverter.svg_string_to_png_data(svg_data);
       userInterfaceInteractor.displayForSuccess(png_data);
     } catch (e) {
       userInterfaceInteractor.displayForError("Couldn't compile this graphviz");
@@ -203,61 +203,33 @@ var graphRenderer = {
 };
 
 var svgToPngConverter = {
-  // Takes an SVG element as target
-  svg_to_png_data: function (target) {
-    var ctx, mycanvas, svg_data, img, child;
-
-    // Construct an SVG image
-    var new_width = target.width.baseVal.valueInSpecifiedUnits;
-    var new_height = target.height.baseVal.valueInSpecifiedUnits;
-
-    svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + new_width +
-    '" height="' + new_height + '">' + target.innerHTML + '</svg>';
-    img = new Image();
-    img.src = "data:image/svg+xml;utf8," + svg_data;
-
-    // Draw the SVG image to a canvas
-    mycanvas = document.createElement('canvas');
-    mycanvas.width = new_width;
-    mycanvas.height = new_height;
-    ctx = mycanvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    // Return the canvas's data
-    return mycanvas.toDataURL("image/png");
+  svg_string_to_png_data: function (svg_string) {
+    var svg_xml = this.svg_string_to_xml(svg_string);
+    var img = this.svg_img_from_xml(svg_xml);
+    var png_data = this.svg_img_to_png_data_via_canvas(img);
+    return png_data;
   },
-  svg_to_png_data_2: function (svg_string) {
-    var ctx, mycanvas, img, child;
-
+  svg_string_to_xml: function (svg_string) {
     var parser = new DOMParser();
     var svg_xml = parser.parseFromString(svg_string, "image/svg+xml").getElementsByTagName('svg')[0];
-
-    // Construct an SVG image
+    return svg_xml;
+  },
+  svg_img_from_xml: function (svg_xml) {
     var new_width = svg_xml.width.baseVal.valueInSpecifiedUnits;
     var new_height = svg_xml.height.baseVal.valueInSpecifiedUnits;
-
     var svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + new_width +
     '" height="' + new_height + '">' + svg_xml.innerHTML + '</svg>';
-    img = new Image();
+    var img = new Image();
     img.src = "data:image/svg+xml;utf8," + svg_data;
-
-    // Draw the SVG image to a canvas
-    mycanvas = document.createElement('canvas');
-    mycanvas.width = new_width;
-    mycanvas.height = new_height;
-    ctx = mycanvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    // Return the canvas's data
-    return mycanvas.toDataURL("image/png");
+    return img;
   },
-  // Takes an SVG element as target
-  svg_to_png_replace: function (target) {
-    var data, img;
-    data = this.svg_to_png_data(target);
-    img = new Image();
-    img.src = data;
-    target.parentNode.replaceChild(img, target);
+  svg_img_to_png_data_via_canvas: function (svg_img) {
+    var mycanvas = document.createElement('canvas');
+    mycanvas.width = svg_img.width;
+    mycanvas.height = svg_img.height;
+    var ctx = mycanvas.getContext("2d");
+    ctx.drawImage(svg_img, 0, 0);
+    return mycanvas.toDataURL("image/png");
   }
 };
 
