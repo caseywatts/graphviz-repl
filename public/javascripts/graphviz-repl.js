@@ -158,7 +158,7 @@ var graphRenderer = {
     this._compileNewImage(_newDotData, userInterfaceInteractor.getType());
   },
   _compileNewImage: function (dotData, type){
-    this._compileFromServer(dotData, type);
+    this._compileToSVG(dotData, type);
   },
   _compileFromServer: function (dotData, type){
     if(compiling){
@@ -185,8 +185,9 @@ var graphRenderer = {
     }
     compiling = true;
     var src = dotData;
-    var result = Viz(src, {'format':"svg", 'engine': type});
-    this._successCallback(result);
+    var svg_data = Viz(src, {'format':"svg", 'engine': type});
+    var png_data = svgToPngConverter.svg_to_png_data_2(svg_data);
+    this._successCallback(png_data);
     compiling = false;
     //$.ajax({
       //type: 'POST',
@@ -229,6 +230,32 @@ var svgToPngConverter = {
 
     // Draw the SVG image to a canvas
     mycanvas = document.createElement('canvas');
+    mycanvas.width = new_width;
+    mycanvas.height = new_height;
+    ctx = mycanvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Return the canvas's data
+    return mycanvas.toDataURL("image/png");
+  },
+  svg_to_png_data_2: function (svg_string) {
+    var ctx, mycanvas, img, child;
+
+    var parser = new DOMParser();
+    var svg_xml = parser.parseFromString(svg_string, "image/svg+xml").getElementsByTagName('svg')[0];
+
+    // Construct an SVG image
+    var new_width = svg_xml.width.baseVal.valueInSpecifiedUnits;
+    var new_height = svg_xml.height.baseVal.valueInSpecifiedUnits;
+
+    var svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + new_width +
+    '" height="' + new_height + '">' + svg_xml.innerHTML + '</svg>';
+    img = new Image();
+    img.src = "data:image/svg+xml;utf8," + svg_data;
+
+    // Draw the SVG image to a canvas
+    mycanvas = document.createElement('canvas');
+    debugger;
     mycanvas.width = new_width;
     mycanvas.height = new_height;
     ctx = mycanvas.getContext("2d");
