@@ -255,7 +255,6 @@ var svgToPngConverter = {
 
     // Draw the SVG image to a canvas
     mycanvas = document.createElement('canvas');
-    debugger;
     mycanvas.width = new_width;
     mycanvas.height = new_height;
     ctx = mycanvas.getContext("2d");
