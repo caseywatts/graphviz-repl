@@ -179,6 +179,30 @@ var graphRenderer = {
       compiling = false;
     });
   },
+  _compileToSVG: function (dotData, type){
+    if(compiling){
+      return;
+    }
+    compiling = true;
+    var src = dotData;
+    var result = Viz(src, {'format':"svg", 'engine': type});
+    this._successCallback(result);
+    compiling = false;
+    //$.ajax({
+      //type: 'POST',
+      //url: '/compile.b64',
+      //data: {
+        //dot: dotData,
+        //type: type
+      //}
+    //})
+    //.done(this._successCallback)
+    //.fail(this._errorCallback)
+    //.always(function (){
+      //compiling = false;
+    //});
+
+  },
   _successCallback: function(data, textStatus, jqXHR){
     userInterfaceInteractor.displayForSuccess(data);
   },
