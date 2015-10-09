@@ -25,7 +25,7 @@ textarea{
 }
 
 .graph-image {
-  max-height: calc(100vh - 50px);
+  max-height: calc(100vh - 125px);
   max-width: 60vw;
   border-style: solid;
   border-width: 1px;
