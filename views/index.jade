@@ -129,3 +129,31 @@ block content
           }
       .col-md-6
         img.fit-container(src='/images/tutorial_3_subgraphs.png')
+    .row
+      h3 Example - Record Shape
+      .col-md-6
+        pre.
+          digraph SimplestDiagrams {
+              None [label="No Alert ToDos Distributed"]
+              Distribute [label="Distribute Alert ToDo"]
+              "Screened?" [
+                  shape=record
+              ]
+              OrganizationMatch [
+                  shape=record
+                  label="{OrganizationMatch|Distribution Type\nAsset Size}"
+              ]
+              AssigneesMatch [
+                  shape=record
+                  label="{AssigneesMatch|Product\nCompliance\nReporter\nGeneral}"
+              ]
+              "An Alert" -> "Screened?"
+              "Screened?" -> "OrganizationMatch" [label="no"]
+                  "Screened?" -> "None" [label="yes"]
+              "OrganizationMatch" -> "AssigneesMatch"  [label="match(es)" arrowhead=crow]
+                  "OrganizationMatch" -> "None"  [label="no matches"]
+              "AssigneesMatch" -> "Distribute" [label="match(es)" arrowhead=crow]
+                  "AssigneesMatch" -> "None" [label="no matches"]
+          }
+      .col-md-6
+        img.fit-container(src='/images/real_example_1.png')
