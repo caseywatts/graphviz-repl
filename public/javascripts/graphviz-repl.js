@@ -11,14 +11,14 @@ var roomNavigator = {
   },
   randomPadName: function () {
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    var string_length = 10;
-    var randomstring = '';
-    for (var i = 0; i < string_length; i++)
+    var stringLength = 10;
+    var randomString = '';
+    for (var i = 0; i < stringLength; i++)
     {
       var rnum = Math.floor(Math.random() * chars.length);
-      randomstring += chars.substring(rnum, rnum + 1);
+      randomString += chars.substring(rnum, rnum + 1);
     }
-    return randomstring;
+    return randomString;
   }
 };
 
@@ -108,9 +108,9 @@ var etherpadWhisperer = {
     );
   },
 
-  txtImportFromUrl: function (padName, source_url) {
+  txtImportFromUrl: function (padName, sourceUrl) {
     var _this = this;
-    $.get(source_url).success(function(data){
+    $.get(sourceUrl).success(function(data){
       _this.txtImportToPad(padName, data);
     });
   },
@@ -192,9 +192,9 @@ var graphRenderer = {
     }
     compiling = true;
     try {
-      var svg_data = Viz(dotData, {'format':"svg", 'engine': type});
-      var png_data = svgToPngConverter.svg_string_to_png_data(svg_data, function(png_data) {
-        userInterfaceInteractor.displayForSuccess(png_data);
+      var svgData = Viz(dotData, {'format':"svg", 'engine': type});
+      var pngData = svgToPngConverter.svgStringToPngData(svgData, function(pngData) {
+        userInterfaceInteractor.displayForSuccess(pngData);
       });
     } catch (e) {
       userInterfaceInteractor.displayForError("Couldn't compile this graphviz");
@@ -204,9 +204,9 @@ var graphRenderer = {
 };
 
 var svgToPngConverter = {
-  svg_string_to_png_data: function (svg_string, callback) {
+  svgStringToPngData: function (svgString, callback) {
     var svgImage = new Image();
-    svgImage.src = "data:image/svg+xml;utf8," + svg_string;
+    svgImage.src = "data:image/svg+xml;utf8," + svgString;
 
     svgImage.onload = function() {
       var canvas = document.createElement("canvas");
