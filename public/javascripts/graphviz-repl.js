@@ -193,8 +193,9 @@ var graphRenderer = {
     compiling = true;
     try {
       var svg_data = Viz(dotData, {'format':"svg", 'engine': type});
-      var png_data = svgToPngConverter.svg_string_to_png_data(svg_data);
-      userInterfaceInteractor.displayForSuccess(png_data);
+      var png_data = svgToPngConverter.svg_string_to_png_data(svg_data, function(png_data) {
+        userInterfaceInteractor.displayForSuccess(png_data);
+      });
     } catch (e) {
       userInterfaceInteractor.displayForError("Couldn't compile this graphviz");
     }
@@ -203,33 +204,23 @@ var graphRenderer = {
 };
 
 var svgToPngConverter = {
-  svg_string_to_png_data: function (svg_string) {
-    var svg_xml = this.svg_string_to_xml(svg_string);
-    var img = this.svg_img_from_xml(svg_xml);
-    var png_data = this.svg_img_to_png_data_via_canvas(img);
-    return png_data;
-  },
-  svg_string_to_xml: function (svg_string) {
-    var parser = new DOMParser();
-    var svg_xml = parser.parseFromString(svg_string, "image/svg+xml").getElementsByTagName('svg')[0];
-    return svg_xml;
-  },
-  svg_img_from_xml: function (svg_xml) {
-    var new_width = svg_xml.width.baseVal.valueInSpecifiedUnits;
-    var new_height = svg_xml.height.baseVal.valueInSpecifiedUnits;
-    var svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + new_width +
-    '" height="' + new_height + '">' + svg_xml.innerHTML + '</svg>';
-    var img = new Image();
-    img.src = "data:image/svg+xml;utf8," + svg_data;
-    return img;
-  },
-  svg_img_to_png_data_via_canvas: function (svg_img) {
-    var mycanvas = document.createElement('canvas');
-    mycanvas.width = svg_img.width;
-    mycanvas.height = svg_img.height;
-    var ctx = mycanvas.getContext("2d");
-    ctx.drawImage(svg_img, 0, 0);
-    return mycanvas.toDataURL("image/png");
+  svg_string_to_png_data: function (svg_string, callback) {
+    var svgImage = new Image();
+    svgImage.src = "data:image/svg+xml;utf8," + svg_string;
+
+    svgImage.onload = function() {
+      var canvas = document.createElement("canvas");
+      canvas.width = svgImage.width;
+      canvas.height = svgImage.height;
+
+      var context = canvas.getContext("2d");
+      context.drawImage(svgImage, 0, 0);
+
+      var pngImage = new Image();
+      pngImage.src = canvas.toDataURL("image/png");
+
+      callback(pngImage.src);
+    };
   }
 };
 
