@@ -5,6 +5,8 @@ Graphviz-REPL gives you a two-pane interface for quickly creating and iterating 
 
 
 ## Installation & Usage
+First install graphviz with `brew install graphviz`.
+
 ### Via Github Repo binary
 
 ```
