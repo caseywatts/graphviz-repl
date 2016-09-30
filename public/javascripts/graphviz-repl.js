@@ -80,7 +80,7 @@ var etherpadWhisperer = {
   settings: {
     exportSuffix: '/export/txt',
     importSuffix: '/import',
-    hostRoot: 'https://pad.systemli.org/p/'
+    hostRoot: 'http://brownbag.me:9001/p/'
   },
 
   txtImportPath: function (padName) {
