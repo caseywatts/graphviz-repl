@@ -33,19 +33,21 @@ block content
                   span 　
                   | sfdp
           .btn-group
-            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-              | Import Tutorial
-              span.caret
-            ul(class='dropdown-menu')
-              li
-                a(onclick='javascript:etherpadWhisperer.importTutorial(1)').
-                  Simplest Diagrams
-              li
-                a(onclick='javascript:etherpadWhisperer.importTutorial(2)').
-                  Advanced Attributes
-              li
-                a(onclick='javascript:etherpadWhisperer.importTutorial(3)').
-                  With Subgraphs
+            a.btn.btn-default(href="/").
+              View Tutorial Sample Code
+            //- button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            //-   | Import Tutorial
+            //-   span.caret
+            //- ul(class='dropdown-menu')
+            //-   li
+            //-     a(onclick='javascript:etherpadWhisperer.importTutorial(1)').
+            //-       Simplest Diagrams
+            //-   li
+            //-     a(onclick='javascript:etherpadWhisperer.importTutorial(2)').
+            //-       Advanced Attributes
+            //-   li
+            //-     a(onclick='javascript:etherpadWhisperer.importTutorial(3)').
+            //-       With Subgraphs
           code.this-page-link graphvizrepl.com/#{etherpadId}
         img(id='graph' class="graph-image")
         pre(id="msg", class="alert alert-block")
