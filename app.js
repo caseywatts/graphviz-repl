@@ -60,7 +60,7 @@ function findDotPath(){
   process.exit(-1)
 }
 
-routes.setDotPath(findDotPath());
+// routes.setDotPath(findDotPath());
 app.get('/', routes.index);
 app.post('/compile.b64', routes.compile_to_base64);
 app.get('/:id', routes.etherpadPage);
