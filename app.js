@@ -45,7 +45,7 @@ app.configure('development', function(){
 });
 
 function findDotPath(){
-  var cands = ['/bin/dot', '/usr/bin/dot', '/usr/local/bin/dot', '/app/graphviz/bin']
+  var cands = ['dot', '/bin/dot', '/usr/bin/dot', '/usr/local/bin/dot', '/app/graphviz/bin']
   if(argv.dot){
     cands.unshift(argv.dot)
   }
